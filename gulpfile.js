@@ -10,9 +10,9 @@ var gulp        = require('gulp'),
     browserSync = require('browser-sync'),
     uglify      = require('gulp-uglify'),
     jshint      = require('gulp-jshint'),
-    svgstore    = require('gulp-svgstore'),
-    svgmin      = require('gulp-svgmin'),
-    styledown   = require('gulp-styledown');
+    styledown   = require('gulp-styledown'),
+    svgSprite   = require('gulp-svg-sprite'),
+    svg2png   = require('gulp-svg2png');
 
 // Setup default arguments.
 var defaultOptions = {
@@ -88,14 +88,42 @@ gulp.task('js', function() {
 });
 
 /**
- * Icons task.
+ * Sprite tasks.
  */
-gulp.task('icons', function () {
-  gulp.src(argv.src + 'icons/*.svg')
-    .pipe(rename({ prefix: 'icon-' }))
-    .pipe(svgmin())
-    .pipe(svgstore())
-    .pipe(gulp.dest(argv.dest + 'icons'));
+
+// SVG
+gulp.task('sprite', function() {
+    gulp.src('**/*.svg', {cwd: argv.src + 'sprite'})
+        .pipe(svgSprite({
+            shape: {
+                dest: "sprite/single"
+            },
+            mode: {
+                css: {
+                    spacing: {
+                        padding: 5
+                    },
+                    dest: "./",
+                    layout: "diagonal",
+                    sprite: "sprite/sprite.svg",
+                    bust: false,
+                    render: {
+                        scss: {
+                            dest: "." + argv.src + "sass/_settings-sprite-autocompiled.scss",
+                            template: argv.src + "/sprite/sprite-template.scss"
+                        }
+                    }
+                }
+            }
+        }))
+        .pipe(gulp.dest(argv.dest));
+});
+
+// PNG fallback
+gulp.task('sprite-fallback', ['sprite'], function() {
+    return gulp.src(argv.dest + 'sprite/sprite.svg')
+        .pipe(svg2png())
+        .pipe(gulp.dest(argv.dest + 'sprite'));
 });
 
 /**
@@ -103,6 +131,7 @@ gulp.task('icons', function () {
  */
 gulp.task('copy-assets', function() {
   gulp.src([
+      argv.src + 'index.html',
       argv.src + 'fonts/**/*',
       argv.src + 'images/**/*'
     ], { base: argv.src })
@@ -142,7 +171,7 @@ gulp.task('watch', function () {
     gulp.watch(argv.src + 'prototype/**/*.twig', ['prototype']);
     gulp.watch(argv.src + 'sass/**/*', ['sass']);
     gulp.watch(argv.src + 'js/**/*', ['js']);
-    gulp.watch(argv.src + 'icons/**/*', ['icons']);
+    gulp.watch(argv.src + 'sprite/**/*', ['sprite-fallback']);
     gulp.watch(argv.src + 'images/**/*', ['copy-assets']);
     gulp.watch(argv.src + 'fonts/**/*', ['copy-assets']);
     gulp.watch(argv.src + 'styleguide/**/*.md', ['styleguide']);
@@ -210,7 +239,7 @@ gulp.task('clean:wordpress', function () {
 });
 
 // Base build task.
-gulp.task('build', ['sass', 'icons', 'copy-assets', 'styleguide']);
+gulp.task('build', ['sass', 'sprite-fallback', 'copy-assets', 'styleguide']);
 
 // Default task.
 gulp.task('default', ['browser-sync', 'watch']);

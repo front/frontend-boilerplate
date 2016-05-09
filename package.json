@@ -13,6 +13,7 @@
   },
   "homepage": "https://github.com/front/front-boilerplate#readme",
   "devDependencies": {
+    "breakpoint-sass": "^2.7.0",
     "browser-sync": "^2.12.5",
     "del": "^2.2.0",
     "fs": "0.0.2",
@@ -26,12 +27,15 @@
     "gulp-replace": "^0.5.4",
     "gulp-sass": "^2.3.1",
     "gulp-styledown": "0.0.2",
+    "gulp-svg-sprite": "^1.2.19",
+    "gulp-svg2png": "^1.0.0",
     "gulp-svgmin": "^1.2.2",
     "gulp-svgstore": "^6.0.0",
     "gulp-twig": "^0.5.0",
     "gulp-uglify": "^1.5.3",
     "gulp-util": "^3.0.7",
     "jshint": "^2.9.2",
+    "susy": "^2.2.12",
     "yargs": "^4.7.0"
   }
 }
