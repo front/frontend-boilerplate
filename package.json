@@ -1,0 +1,37 @@
+{
+  "name": "front-boilerplate",
+  "version": "0.0.1",
+  "description": "An initial boilerplate for front-end projects",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/front/front-boilerplate.git"
+  },
+  "author": "Roberto Ornelas",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/front/front-boilerplate/issues"
+  },
+  "homepage": "https://github.com/front/front-boilerplate#readme",
+  "devDependencies": {
+    "browser-sync": "^2.12.5",
+    "del": "^2.2.0",
+    "fs": "0.0.2",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-git": "^1.7.1",
+    "gulp-if": "^2.0.1",
+    "gulp-jshint": "^2.0.0",
+    "gulp-plumber": "^1.1.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-replace": "^0.5.4",
+    "gulp-sass": "^2.3.1",
+    "gulp-styledown": "0.0.2",
+    "gulp-svgmin": "^1.2.2",
+    "gulp-svgstore": "^6.0.0",
+    "gulp-twig": "^0.5.0",
+    "gulp-uglify": "^1.5.3",
+    "gulp-util": "^3.0.7",
+    "jshint": "^2.9.2",
+    "yargs": "^4.7.0"
+  }
+}

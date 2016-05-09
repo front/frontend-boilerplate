@@ -1,0 +1,200 @@
+var gulp        = require('gulp'),
+    gutil       = require('gulp-util'),
+    gulpif      = require('gulp-if'),
+    plumber     = require('gulp-plumber'),
+    rename      = require('gulp-rename'),
+    del         = require('del'),
+    twig        = require('gulp-twig'),
+    sass        = require('gulp-sass'),
+    cssPrefix   = require('gulp-autoprefixer'),
+    browserSync = require('browser-sync'),
+    uglify      = require('gulp-uglify'),
+    jshint      = require('gulp-jshint'),
+    svgstore    = require('gulp-svgstore'),
+    svgmin      = require('gulp-svgmin'),
+    styledown   = require('gulp-styledown');
+
+// Setup default arguments.
+var defaultOptions = {
+  env: process.env.NODE_ENV || 'development',
+  name: process.cwd().match(/([^\/]*)\/*$/)[1],
+  // Paths.
+  root: './',
+  src:  './source/',
+  dest: './build/',
+  npm:  './node_modules/',
+  tmp:  './tmp/',
+  // Configurations.
+  sassConfig: {
+    errLogToConsole: true
+  },
+  cssPrefix: ['last 15 versions', '> 1%', 'ie 8']
+};
+
+var argv = require('yargs').default(defaultOptions).argv;
+
+/**
+ * Delete destination folder.
+ */
+gulp.task('clean', function() {
+  del([ argv.dest ]).then(paths => {
+    gutil.log('Deleted files and folders:\n', paths.join('\n'));
+  });
+});
+
+/**
+ * Log utility task.
+ */
+gulp.task('log', function() {
+  gutil.log(argv.name);
+});
+
+/**
+ * Prototype compiling task.
+ */
+gulp.task('prototype', function() {
+  gulp.src(argv.src + 'prototype/**/*.twig')
+    .pipe(plumber())
+    .pipe(twig())
+    .pipe(gulp.dest(argv.dest + 'prototype'))
+    .pipe(browserSync.reload({ stream: true }));
+});
+
+/**
+ * Stylesheets task.
+ */
+gulp.task('sass', function () {
+  gulp.src(argv.src + 'sass/*.scss')
+    .pipe(plumber())
+    .pipe(sass(argv.sassConfig))
+    .pipe(cssPrefix(argv.cssPrefix, { cascade: true }))
+    .pipe(gulp.dest(argv.dest + 'css'))
+    .pipe(browserSync.reload({ stream: true }));
+});
+
+/**
+ * Javascript task.
+ */
+gulp.task('js', function() {
+  gulp.src(argv.src + 'js/*.js')
+    .pipe(plumber())
+    .pipe(jshint())
+    .pipe(jshint.reporter('default'))
+    .pipe(gulp.dest(argv.dest + 'js'))
+    .pipe(gulpif(argv.env === 'production', uglify()))
+    .pipe(gulpif(argv.env === 'production', rename({ suffix: '.min' })))
+    .pipe(gulpif(argv.env === 'production', gulp.dest(argv.dest + 'js')))
+    .pipe(browserSync.reload({ stream: true, once: true }));
+});
+
+/**
+ * Icons task.
+ */
+gulp.task('icons', function () {
+  gulp.src(argv.src + 'icons/*.svg')
+    .pipe(rename({ prefix: 'icon-' }))
+    .pipe(svgmin())
+    .pipe(svgstore())
+    .pipe(gulp.dest(argv.dest + 'icons'));
+});
+
+/**
+ * Copy assets task.
+ */
+gulp.task('copy-assets', function() {
+  gulp.src([
+      argv.src + 'fonts/**/*',
+      argv.src + 'images/**/*'
+    ], { base: argv.src })
+    .pipe(gulp.dest( argv.dest ))
+    .pipe(browserSync.reload({ stream: true }));
+});
+
+/**
+ * Styleguide compiling task.
+ */
+gulp.task('styleguide', function() {
+  gulp.src(argv.src + 'styleguide/styleguide.md')
+    .pipe(plumber())
+    .pipe(styledown({
+      config: argv.src + 'styleguide/config-styleguide.md',
+      filename: 'index.html'
+    }))
+    .pipe(gulp.dest(argv.dest + 'styleguide/'))
+    .pipe(browserSync.reload({ stream: true }));
+});
+
+/**
+ * Browser-sync task.
+ */
+gulp.task('browser-sync', ['build'], function() {
+  browserSync({
+    server: {
+      baseDir: argv.dest
+    }
+  });
+});
+
+/**
+ * Watch files.
+ */
+gulp.task('watch', function () {
+    gulp.watch(argv.src + 'prototype/**/*.twig', ['prototype']);
+    gulp.watch(argv.src + 'sass/**/*', ['sass']);
+    gulp.watch(argv.src + 'js/**/*', ['js']);
+    gulp.watch(argv.src + 'icons/**/*', ['icons']);
+    gulp.watch(argv.src + 'images/**/*', ['copy-assets']);
+    gulp.watch(argv.src + 'fonts/**/*', ['copy-assets']);
+    gulp.watch(argv.src + 'styleguide/**/*.md', ['styleguide']);
+});
+
+/**
+ * Add WordPress theme to the current boilerplate.
+ */
+gulp.task('add-theme:wordpress', function() {
+  var fs      = require('fs'),
+      git     = require('gulp-git'),
+      replace = require('gulp-replace');
+
+  // Quick check before trying to copy the theme assets and files.
+  fs.stat(argv.root + 'functions.php', function(err, stat) {
+    if (err === null) {
+      gutil.log('Theme already exists in the current root directory.');
+    }
+    else {
+      // Get a copy of the _t theme from https://github.com/front/_t
+      git.clone('https://github.com/front/_t.git', { args: argv.tmp }, function(err) {
+        // Handle git errors.
+        if (err) {
+          throw err;
+        }
+        else {
+          // Rename the theme machine names.
+          gulp.src(argv.tmp + '**/*')
+          // Search for: '_t' and replace with: 'argv.name'
+            .pipe(replace("'_t'", "'" + argv.name + "'"))
+          // Search for: _t_ and replace with: argv.name_
+            .pipe(replace('_t_', argv.name + '_'))
+          // Search for: Text Domain: _t and replace with: Text Domain: argv.name in style.css.
+            .pipe(replace('Text Domain: _t', 'Text Domain: ' + argv.name))
+          // Search for:  _t and replace with:  argv.name
+            .pipe(replace(' _t', ' ' + argv.name))
+          // Search for: _t- and replace with: argv.name-
+            .pipe(replace('_t-', argv.name + '-'))
+          // Override existing files.
+            .pipe(gulp.dest(argv.tmp));
+        }
+      });
+
+      // Move the theme to the root directory.
+
+      // Clear the temporary folder.
+    }
+  });
+});
+
+// Base build task.
+gulp.task('build', ['sass', 'icons', 'copy-assets', 'styleguide']);
+
+// Default task.
+gulp.task('default', ['browser-sync', 'watch']);
