@@ -1,0 +1,48 @@
+// Functions Partials
+// All of your functions should go in this file.
+
+// Local variables
+// Base font size
+$fz: 16 !default;
+
+// Pixel to em function
+// Function to convert pixel font-sizes to em's.
+@function em($pxval, $base: $fz) {
+  @if not unitless($pxval) {
+      $pxval: strip-units($pxval);
+  }
+  @if not unitless($base) {
+      $base: strip-units($base);
+  }
+  @return ($pxval / $base) * 1em;
+}
+
+// Strips the units from a value. e.g. 12px -> 12
+@function strip-units($val) {
+  @return ($val / ($val * 0 + 1));
+}
+
+// SVG Sprite functions
+// Retrive an attributes value for a specific icon in the sprite map
+// @param {string} $icon - The name of the icon
+// @param {string} $attr - The attribute you wish to retrieve (e.g. width)
+@function sprite-attr($icon, $attr) {
+  $newIcon: map-get($icons, $icon);
+  @if $newIcon == null {
+    @warn "Can't find an icon with the name #{$icon}";
+  }
+  @return map-get($newIcon, $attr);
+}
+
+// Create a map with the specified icon of attributes
+// @param {string} $icon - The name of the icon
+@function icon-attr($icon) {
+  $attr: (
+    width: sprite-attr($icon, width),
+    height: sprite-attr($icon, height),
+    x: sprite-attr($icon, backgroundX),
+    y: sprite-attr($icon, backgroundY)
+  );
+
+  @return $attr;
+}

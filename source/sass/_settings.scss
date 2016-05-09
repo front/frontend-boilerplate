@@ -1,0 +1,8 @@
+////////////
+// Sprite //
+////////////
+@import "settings-sprite-autocompiled";
+// Add class for ´.no-svg sprite fallback
+$pngSprite: '.no-svg' !default;
+// Set the `$sprite` map
+$sprite: map-get($icons, sprite) !default;
