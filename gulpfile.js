@@ -12,7 +12,8 @@ var gulp        = require('gulp'),
     jshint      = require('gulp-jshint'),
     styledown   = require('gulp-styledown'),
     svgSprite   = require('gulp-svg-sprite'),
-    svg2png   = require('gulp-svg2png');
+    svg2png     = require('gulp-svg2png'),
+    filter      = require('gulp-filter');
 
 // Setup default arguments.
 var defaultOptions = {
@@ -180,11 +181,10 @@ gulp.task('watch', function () {
 /**
  * Add WordPress theme to the current boilerplate.
  */
-gulp.task('add-theme:wordpress', function(cb) {
+gulp.task('add-theme:wordpress', function() {
   var fs      = require('fs'),
       git     = require('gulp-git'),
-      replace = require('gulp-replace'),
-      clean   = require('gulp-clean');
+      replace = require('gulp-replace');
 
   // Quick check before trying to copy the theme assets and files.
   fs.stat(argv.root + 'functions.php', function(err, stat) {
@@ -199,6 +199,9 @@ gulp.task('add-theme:wordpress', function(cb) {
           throw err;
         }
         else {
+          const rootFilter   = filter(['**', '!**/js/**/*', '!**/sass/**/*'], { restore: true });
+          const assetsFilter = filter(['**/js/**/*', '**/sass/**/*']);
+
           // Rename the theme machine names.
           gulp.src(argv.tmp + '**/*')
           // Search for: '_t' and replace with: 'argv.name'
@@ -212,15 +215,13 @@ gulp.task('add-theme:wordpress', function(cb) {
           // Search for: _t- and replace with: argv.name-
             .pipe(replace('_t-', argv.name + '-'))
           // Override existing files.
-            .pipe(gulp.dest(argv.tmp));
-
-          // Copy frontend source files to the sources folder.
-          gulp.src(argv.tmp + 'js/**/*')
-            .pipe(gulp.dest(argv.src + 'js'));
-          gulp.src(argv.tmp + 'sass/**/*')
-            .pipe(gulp.dest(argv.src + 'sass'));
-          gulp.src(argv.tmp + '**/*')
-            .pipe(gulp.dest(argv.root));
+            .pipe(gulp.dest(argv.tmp))
+          // Copy the files and folders.
+            .pipe(rootFilter)
+            .pipe(gulp.dest(argv.root))
+            .pipe(rootFilter.restore)
+            .pipe(assetsFilter)
+            .pipe(gulp.dest(argv.src));
         }
       });
     }
