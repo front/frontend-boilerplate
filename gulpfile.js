@@ -6,6 +6,7 @@ var gulp        = require('gulp'),
     del         = require('del'),
     twig        = require('gulp-twig'),
     sass        = require('gulp-sass'),
+    sourcemaps  = require('gulp-sourcemaps'),
     cssPrefix   = require('gulp-autoprefixer'),
     browserSync = require('browser-sync'),
     uglify      = require('gulp-uglify'),
@@ -67,8 +68,10 @@ gulp.task('prototype', function() {
 gulp.task('sass', function () {
   gulp.src(argv.src + 'sass/*.scss')
     .pipe(plumber())
+    .pipe(gulpif(argv.env === 'development', sourcemaps.init()))
     .pipe(sass(argv.sassConfig))
     .pipe(cssPrefix(argv.cssPrefix, { cascade: true }))
+    .pipe(gulpif(argv.env === 'development', sourcemaps.write('sourcemap')))
     .pipe(gulp.dest(argv.dest + 'css'))
     .pipe(browserSync.reload({ stream: true }));
 });
