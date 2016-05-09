@@ -13,6 +13,7 @@
   },
   "homepage": "https://github.com/front/front-boilerplate#readme",
   "devDependencies": {
+    "breakpoint-sass": "^2.7.0",
     "browser-sync": "^2.12.5",
     "del": "^2.2.0",
     "fs": "0.0.2",
@@ -34,6 +35,7 @@
     "gulp-uglify": "^1.5.3",
     "gulp-util": "^3.0.7",
     "jshint": "^2.9.2",
+    "susy": "^2.2.12",
     "yargs": "^4.7.0"
   }
 }
