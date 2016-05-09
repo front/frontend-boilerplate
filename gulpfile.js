@@ -151,10 +151,11 @@ gulp.task('watch', function () {
 /**
  * Add WordPress theme to the current boilerplate.
  */
-gulp.task('add-theme:wordpress', function() {
+gulp.task('add-theme:wordpress', function(cb) {
   var fs      = require('fs'),
       git     = require('gulp-git'),
-      replace = require('gulp-replace');
+      replace = require('gulp-replace'),
+      clean   = require('gulp-clean');
 
   // Quick check before trying to copy the theme assets and files.
   fs.stat(argv.root + 'functions.php', function(err, stat) {
@@ -183,14 +184,29 @@ gulp.task('add-theme:wordpress', function() {
             .pipe(replace('_t-', argv.name + '-'))
           // Override existing files.
             .pipe(gulp.dest(argv.tmp));
+
+          // Copy frontend source files to the sources folder.
+          gulp.src(argv.tmp + 'js/**/*')
+            .pipe(gulp.dest(argv.src + 'js'));
+          gulp.src(argv.tmp + 'sass/**/*')
+            .pipe(gulp.dest(argv.src + 'sass'));
+          gulp.src(argv.tmp + '**/*')
+            .pipe(gulp.dest(argv.root));
         }
       });
-
-      // Move the theme to the root directory.
-
-      // Clear the temporary folder.
     }
   });
+});
+
+/**
+ * Clean leftovers from theme:wordpress.
+ */
+gulp.task('clean:wordpress', function () {
+  del([
+    argv.tmp,
+    argv.root + 'js',
+    argv.root + 'sass'
+  ]);
 });
 
 // Base build task.
