@@ -1,3 +1,132 @@
+///////////
+// Color //
+///////////
+$black: #000;
+$white: #fff;
+$red: #D91F2E;
+$grey-222222: #222222;
+$grey-686868: #686868;
+$grey-777777: #777777;
+$grey-ADADAD: #ADADAD; // Used on article dotted line
+$grey-C2C2C2: #C2C2C2;
+$grey-D8D8D8: #D8D8D8;
+$grey-E3E3E3: #E3E3E3;
+$grey-F5F6EE: #F5F6EE;
+$grey-F9F9F9: #F9F9F9;
+
+$color-primary: $red;
+$color-secondary: $black;
+$color-grey: $grey-222222;
+$color-grey-medium: $grey-686868;
+$color-grey-light: $grey-777777;
+
+$border-color: $grey-C2C2C2;
+$border-color-medium: $grey-D8D8D8;
+$border-color-light: $grey-E3E3E3;
+
+$bg-grey-green: $grey-F5F6EE;
+$bg-grey-light: $grey-F9F9F9;
+$bg-red: $red;
+$bg-black: $black;
+
+////////////////
+// Typography //
+////////////////
+$fz: 16;
+$fz-small: $fz;
+$fz-h1: 54;
+$fz-h1-small: 36;
+$fz-h2: 28;
+$fz-h2-small: 26;
+$fz-h3: 24;
+$fz-h3-small: $fz-h3;
+$fz-h4: 22;
+$fz-h4-small: $fz-h4;
+$fz-h5: $fz;
+$fz-h5-small: $fz-h5;
+$fz-h6: 16;
+$fz-h6-small: $fz-h6;
+
+
+// Line height
+$lh: 1.58;
+$lh-h1: 1.2;
+$lh-h1-small: 1.11;
+$lh-h2: 1.19;
+$lh-h2-small: 1.15;
+$lh-h3: 1.08;
+$lh-h4: 1.09;
+$lh-h5: 1.11;
+$lh-h6: 1.125;
+
+// Font family
+$ff-primary: Georgia, serif;
+$ff-secondary:  Arial, sans-serif;
+$ff-tertiary: "Helvetica Neue", Arial, sans-serif;
+
+// Font weight
+$fw-light: 300;
+$fw-regular: 400;
+$fw-bold: 600;
+
+/////////////////
+// Grid layout //
+/////////////////
+// Susy map
+$susy: (
+  columns: 12,
+  gutters: .422535211,
+  global-box-sizing: border-box,
+  // debug: (image: show)
+);
+
+
+// Additional susy maps
+$layout-medium: layout(6 .5 false);
+$layout-small: layout(4 1 false);
+
+
+/////////////
+// Spacing //
+/////////////
+$space: 38px; // Base font size (19px) * 2
+$space-one-eight: $space * 0.125;
+$space-one-fourth: $space * 0.25;
+$space-half: $space * 0.5;
+$space-three-fourth: $space * .75;
+$space-double: $space * 2;
+$space-triple: $space * 3;
+$space-quadruple: $space * 4;
+
+$header-color: $black;
+$header-color-secondary: $grey-686868;
+
+$base-fw: $fw-regular;
+$base-fz: ($fz/16) * 100%;
+$base-fz-small: ($fz-small/16) * 100%;
+$base-lh: $lh;
+$base-color: $grey-222222;
+$base-color-grey: $grey-777777;
+$base-ff: $ff-primary;
+$base-border-color: $border-color;
+
+// Base
+$headers-ff: $ff-secondary; // Font-family headers
+$headers-color: $base-color;
+$link-color: $color-primary;
+$border-radius: 5px;
+
+////////////////
+// Breakpoint //
+////////////////
+$break-small: 20em;
+$break-medium: 33em;
+$break-large: 45em; // 767px
+$break-xlarge: 70em; // 1139px
+
+// Layout
+$gutter: $space-half;
+
 ////////////
 // Sprite //
 ////////////
@@ -6,3 +135,17 @@
 $pngSprite: '.no-svg' !default;
 // Set the `$sprite` map
 $sprite: map-get($icons, sprite) !default;
+
+/////////////
+// Modules //
+/////////////
+// Buttons
+$btn-color: $color-primary;
+$btn-color-primary: $btn-color;
+
+// Forms
+$form-border-color: $border-color;
+
+// Table
+$table-thead-bg: $grey-C2C2C2;
+$table-border-color: $grey-E3E3E3;

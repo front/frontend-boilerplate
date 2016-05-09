@@ -1,0 +1,89 @@
+label {
+  font-size: em(12);
+  display: inline-block;
+  position: relative;
+}
+
+fieldset {
+  + fieldset {
+    margin-top: $space-one-fourth;
+    display: block;
+  }
+}
+
+/* Default input text form */
+input[type="text"],
+input[type="password"],
+input[type="date"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="month"],
+input[type="week"],
+input[type="email"],
+input[type="number"],
+input[type="search"],
+input[type="tel"],
+input[type="time"],
+input[type="url"],
+input[type="color"],
+textarea,
+select {
+  background-color: white;
+  line-height: 1;
+  height: 41px;
+  padding-left: $space-one-eight;
+  padding-right: $space-one-eight;
+  border: 0;
+  border: 1px solid $form-border-color;
+  width: 100%;
+  display: inline-block;
+  border-radius: 0;
+  -webkit-appearance: none;
+  box-sizing: border-box;
+
+  &:focus {
+    border-color: $base-color;
+  }
+}
+
+textarea {
+  padding-top:  $space-half;
+  padding-bottom: $space-half;
+  min-height: 7em;
+}
+
+/* Override default webkit input search style */
+input[type="search"] {
+  -webkit-appearance: none;
+  padding-left: 15px;
+
+  &::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+  }
+}
+
+.form-search {
+  input {
+    background-color: transparent;
+  }
+}
+
+/* Override default placeholder text style */
+::-webkit-input-placeholder {
+  color: #ccc;
+  line-height: 1.5;
+}
+
+:-moz-placeholder {
+  color: #ccc;
+  line-height: 1.5;
+}
+::-moz-placeholder {
+  color: #ccc;
+  line-height: 1.5;
+}
+
+:-ms-input-placeholder {
+  color: #ccc;
+  line-height: 1.5;
+}

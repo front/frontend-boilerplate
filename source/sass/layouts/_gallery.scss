@@ -1,0 +1,58 @@
+%gallery {
+  @extend .clearfix;
+  clear: both;
+
+  .grid-item {
+    + .grid-item {
+      margin-top: gutter($layout-small);
+
+      @include breakpoint($break-medium) {
+        margin-top: gutter();
+      }
+    }
+  }
+}
+
+.gallery-three {
+  @extend %gallery;
+
+  .grid-item {
+    @include breakpoint($break-medium $break-large) {
+      @include gallery(6);
+
+      &:nth-child(-n+2) {
+        margin-top: 0 !important;
+      }
+    }
+
+    @include breakpoint($break-large) {
+      @include gallery(4);
+
+      &:nth-child(-n+3) {
+        margin-top: 0 !important;
+      }
+    }
+  }
+}
+
+.gallery-four {
+  @extend %gallery;
+
+  .grid-item {
+    @include breakpoint($break-medium $break-large) {
+      @include gallery(6);
+
+      &:nth-child(-n+2) {
+        margin-top: 0 !important;
+      }
+    }
+
+    @include breakpoint($break-large) {
+      @include gallery(3);
+
+      &:nth-child(-n+4) {
+        margin-top: 0 !important;
+      }
+    }
+  }
+}

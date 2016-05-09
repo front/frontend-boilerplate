@@ -1,0 +1,39 @@
+table {
+  width: 100%;
+  text-align: left;
+  margin: $space-half 0;
+  line-height: 1.2;
+
+  @include breakpoint($break-large) {
+    margin: $space 0;
+  }
+}
+
+thead {
+  background-color: $table-thead-bg;
+  border-radius: $border-radius;
+}
+
+th,
+td {
+  padding: 0 0 3px;
+
+  @include breakpoint($break-large) {
+    padding: $space-half $space-three-fourth;
+  }
+}
+
+.cell-small {
+  @include breakpoint($break-large) {
+    font-size: em($fz-h6);
+    padding-top: 0 !important;
+  }
+}
+
+.row-border-none {
+  border: none !important;
+}
+
+tbody tr {
+  border-bottom: 1px solid $table-border-color;
+}

@@ -4,7 +4,7 @@
     <script src='https://cdn.rawgit.com/styledown/styledown/v1.0.2/data/styledown.js'></script>
     <link rel='stylesheet' href='https://cdn.rawgit.com/styledown/styledown/v1.0.2/data/styledown.css' />
     <link rel='stylesheet' href='../css/styleguide.css' />
-    <link rel='stylesheet' href='../css/style.css' />
+    <link rel='stylesheet' href='../css/styles.css' />
 
 ### Body
     .jumbotron.jumbotron-styleguide

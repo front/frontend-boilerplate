@@ -1,0 +1,12 @@
+.container {
+  @extend .clearfix;
+  max-width: $break-xlarge;
+  margin-left: $gutter;
+  margin-right: $gutter;
+  @include show-grid();
+
+  @include breakpoint($break-xlarge) {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}

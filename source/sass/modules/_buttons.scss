@@ -1,0 +1,72 @@
+.btn,
+button,
+input[type="submit"] {
+  display: inline-block;
+  padding: .8em 1.4em;
+  line-height: 1;
+  text-align: center;
+  background-color: transparent;
+  border: 1px solid $btn-color;
+  color: $btn-color;
+  text-transform: uppercase;
+  white-space: normal;
+  border-radius: 0;
+
+  &:hover,
+  &:focus {
+    text-decoration: none;
+    transform: translateY(-3px);
+  }
+
+  &.small {
+    padding: .6em 1.2em;
+    font-size: em($fz-h6);
+  }
+
+  &.large {
+    @include breakpoint($break-large) {
+      padding: 1em 2em;
+      font-size: em($fz-h4);
+    }
+  }
+
+  &.block {
+    display: block;
+  }
+}
+
+.btn-text {
+  @extend .btn;
+  border-color: transparent;
+  color: $btn-color;
+}
+
+.btn-primary {
+  @extend .btn;
+  background-color: $btn-color-primary;
+  border-color: $btn-color-primary;
+  color: $base-color;
+
+  &:hover,
+  &:focus {
+    background-color: scale-color($btn-color-primary, $lightness: 5%);
+  }
+}
+
+.btn-secondary {
+  @extend .btn;
+  color: $white;
+  background-color: $btn-color;
+  border-color: $btn-color;
+
+  &:hover,
+  &:focus {
+    background-color: scale-color($btn-color, $lightness: 5%);
+  }
+}
+
+.btn-invert {
+  @extend .btn;
+  color: $white;
+  border-color: $white;
+}

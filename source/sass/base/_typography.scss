@@ -1,0 +1,84 @@
+h1, .h1,
+h2, .h2,
+h3, .h3,
+h4, .h4,
+h5, .h5,
+h6, .h6 {
+  margin-top: 1.5em;
+  margin-bottom: .1em;
+  font-weight: $fw-bold;
+  // color: $headers-color;
+  font-family: $headers-ff;
+}
+
+h1, .h1 {
+  font-size: em($fz-h1-small);
+  line-height: $lh-h1;
+
+  @include breakpoint($break-large) {
+    font-size: em($fz-h1);
+  }
+}
+
+h2, .h2 {
+  font-size: em($fz-h2-small);
+  line-height: $lh-h2;
+
+  @include breakpoint($break-large) {
+    font-size: em($fz-h2);
+  }
+}
+
+h3, .h3 {
+  font-size: em($fz-h3-small);
+  line-height: $lh-h3;
+
+  @include breakpoint($break-large) {
+    font-size: em($fz-h3);
+  }
+}
+
+h4, .h4 {
+  font-size: em($fz-h4-small);
+  line-height: $lh-h4;
+
+  @include breakpoint($break-large) {
+    font-size: em($fz-h4);
+  }
+}
+
+h5, .h5 {
+  font-size: em($fz-h5-small);
+  line-height: $lh-h5;
+
+  @include breakpoint($break-large) {
+    font-size: em($fz-h5);
+  }
+}
+
+h6, .h6 {
+  font-size: em($fz-h6-small);
+  line-height: $lh-h6;
+
+  @include breakpoint($break-large) {
+    font-size: em($fz-h6);
+  }
+}
+
+p {
+  margin: 0 0 .75em;
+}
+
+a {
+  text-decoration: none;
+  color: $link-color;
+
+  &:hover,
+  &:focus {
+    text-decoration: underline;
+    // color: $link-color-hover;
+  }
+
+}
+
+blockquote { }

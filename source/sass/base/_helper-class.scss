@@ -1,0 +1,27 @@
+// Visability
+// Hide only visually, but have it available for screenreaders: h5bp.com/v
+.visuallyhidden {
+  @include visuallyhidden;
+
+  // Extends the .visuallyhidden class to allow the element to be focusable
+  // when navigated to via the keyboard: h5bp.com/p
+  &.focusable:active,
+  &.focusable:focus {
+      clip: auto;
+      height: auto;
+      margin: 0;
+      overflow: visible;
+      position: static;
+      width: auto;
+  }
+}
+
+.invisible { visibility: hidden; }
+
+.clearfix {
+  @include clearfix;
+}
+
+.circle {
+  border-radius: 50%;
+}

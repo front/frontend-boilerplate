@@ -1,4 +1,6 @@
-// // SVG sprite placeholders and mixins
+////////////////////////////////////////
+// SVG sprite placeholders and mixins //
+////////////////////////////////////////
 // Assign the correct SVG background image and dimensions to the element
 %sprite {
   display: inline-block;
@@ -126,4 +128,33 @@
   // Add ie fallback
   @include png-sprite($icon, $type);
 
+}
+
+//////////////
+// Clearfix //
+//////////////
+@mixin clearfix {
+  &:before,
+  &:after {
+    content: " ";
+    display: table;
+  }
+
+  &:after {
+    clear: both;
+  }
+}
+
+////////////////////
+// Visuallyhidden //
+////////////////////
+@mixin visuallyhidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
 }

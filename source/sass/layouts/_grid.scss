@@ -1,0 +1,86 @@
+%grid {
+  @extend .clearfix;
+  clear: both;
+
+  .grid-item {
+    @include breakpoint(max-width $break-large) {
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    + .grid-item {
+      margin-top: gutter($layout-small);
+
+      @include breakpoint($break-medium) {
+        margin-top: gutter();
+      }
+    }
+  }
+}
+
+/**
+ * Grid two
+ */
+.grid-two {
+  @extend %grid;
+
+  .grid-item {
+    @include breakpoint($break-large) {
+      margin-top: 0 !important;
+      @include span(6);
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}
+
+/**
+ * Grid two
+ */
+.grid-three {
+  @extend %grid;
+
+  .grid-item {
+    @include breakpoint($break-large) {
+      margin-top: 0 !important;
+      @include span(4);
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}
+
+/**
+ * Grid four
+ */
+.grid-four {
+  @extend %grid;
+
+  .grid-item {
+    @include breakpoint($break-medium $break-large) {
+      @include span(6);
+
+      &:nth-child(-n+2) {
+        margin-top: 0;
+      }
+
+      &:nth-child(even) {
+        margin-right: 0;
+      }
+    }
+
+    @include breakpoint($break-large) {
+      margin-top: 0 !important;
+      @include span(3);
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}
