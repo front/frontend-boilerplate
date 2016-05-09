@@ -1,0 +1,117 @@
+// Vendor
+@import "./node_modules/breakpoint-sass/stylesheets/breakpoint";
+@import "settings"; // Import project variables
+
+body.sg {
+  background-color: white;
+}
+
+.sg-container {
+  margin-left: 10px;
+  margin-right: 10px;
+
+  @include breakpoint(1540px) {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1500px;
+  }
+}
+
+.jumbotron-styleguide {
+  background: #fafafa;
+  border-bottom: solid 1px #eee;
+  text-align: center;
+  padding-top: 5%;
+  // font-family: 'Source Sans Pro', sans-serif;
+
+  text-rendering: optimizeLegibility !important;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.jumbotron-styleguide h1 {
+  // font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 100;
+  color: #111;
+  font-size: 3.4em;
+  margin-bottom: 20px;
+  margin-top: 0;
+}
+
+.jumbotron-styleguide p {
+  font-weight: 400;
+  font-size: 1.15em;
+  line-height: 1.7;
+  color: #222;
+}
+
+.jumbotron-styleguide .btn {
+  // font-family: 'Source Sans Pro', sans-serif;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 0.8em;
+  letter-spacing: 1px;
+  padding: 10px 30px;
+  margin: 10px 5px 0 5px;
+  border-color: #ddd;
+}
+
+.jumbotron-styleguide .btn:hover {
+  border-color: transparent;
+  color: #fff;
+}
+
+.jumbotron-inner {
+  max-width: 500px;
+  @include breakpoint(500px) {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/*
+ * override heading styles.
+ */
+h1.sg {
+  font-weight: 600;
+  font-size: 1.3em;
+  text-transform: uppercase;
+  margin: 6em 0 1.5em;
+  color: #777;
+
+  + section h2.sg {
+    margin-top: 0;
+  }
+}
+
+h2.sg.sg {
+  // font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 300;
+  font-size: 2.3em;
+}
+
+/*
+ * for @example.slim
+ */
+
+.sg-slim .sg-canvas {
+  max-width: 300px;
+}
+
+/*
+ * for @example.wide
+ */
+
+.sg-wide .sg-canvas {
+  max-width: 540px;
+}
+
+/**
+ * Visualize grid on styleguide
+ */
+.sg-visualize-grid {
+  .grid-item {
+    background-color: scale_color(dodgerblue, $lightness: 80);
+    min-height: 100px;
+  }
+}
