@@ -28,7 +28,11 @@ var defaultOptions = {
   tmp:  './tmp/',
   // Configurations.
   sassConfig: {
-    errLogToConsole: true
+    errLogToConsole: true,
+    outputStyle: 'nested'
+  },
+  sassConfigProd: {
+    outputStyle: 'compressed'
   },
   cssPrefix: ['last 15 versions', '> 1%', 'ie 8']
 };
@@ -69,7 +73,7 @@ gulp.task('sass', function () {
   gulp.src(argv.src + 'sass/*.scss')
     .pipe(plumber())
     .pipe(gulpif(argv.env === 'development', sourcemaps.init()))
-    .pipe(sass(argv.sassConfig))
+    .pipe(gulpif(argv.env === 'development', sass(argv.sassConfig), sass(argv.sassConfigProd)))
     .pipe(cssPrefix(argv.cssPrefix, { cascade: true }))
     .pipe(gulpif(argv.env === 'development', sourcemaps.write('sourcemap')))
     .pipe(gulp.dest(argv.dest + 'css'))
@@ -243,7 +247,7 @@ gulp.task('clean:wordpress', function () {
 });
 
 // Base build task.
-gulp.task('build', ['sass', 'sprite-fallback', 'copy-assets', 'styleguide']);
+gulp.task('build', ['sass', 'sprite-fallback', 'copy-assets', 'styleguide', 'prototype']);
 
 // Default task.
 gulp.task('default', ['browser-sync', 'watch']);
