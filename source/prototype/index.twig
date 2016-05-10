@@ -1,21 +1,13 @@
-<html>
-  <head>
-    <meta charset="utf-8"/>
-    <title>Prototype</title>
-    <link href='//fonts.googleapis.com/css?family=Lato:300' rel='stylesheet' type='text/css'>
-    <link href='../css/styles.css' rel='stylesheet' type='text/css'>
-  </head>
-  <body>
-    <div class="container">
-      <h1>About</h1>
-      <p>This prototype is built with Twig.js, a pure JavaScript implementation of the Twig PHP templating language (<a href="http://twig.sensiolabs.org/">http://twig.sensiolabs.org/</a>)</p>
-      <p>Twig.js is currently a work in progress and supports a limited subset of the Twig templating language (with more coming).</p>
-      <h3>Docs</h3>
-      <p>Documentation is available in the <a href="https://github.com/twigjs/twig.js/wiki">twig.js wiki</a> on Github.</p>
-      <h3>Feature Support</h3>
-      <p>For a list of supported tags/filters/functions/tests see the <a href="https://github.com/twigjs/twig.js/wiki/Implementation-Notes">Implementation Notes</a> page on the wiki.</p>
-      <h3>This template</h3>
-      <p>Feel free to change this template at <i>[root]/source/prototype/index.twig</i></p>
-    </div>
-  </body>
-</html>
+{# index.twig #}
+{% extends "_includes/layout.twig" %}
+{% block page %}
+<h1>About</h1>
+<p>This prototype is built with Twig.js, a pure JavaScript implementation of the Twig PHP templating language (<a href="http://twig.sensiolabs.org/">http://twig.sensiolabs.org/</a>)</p>
+<p>Twig.js is currently a work in progress and supports a limited subset of the Twig templating language (with more coming).</p>
+<h3>Docs</h3>
+<p>Documentation is available in the <a href="https://github.com/twigjs/twig.js/wiki">twig.js wiki</a> on Github.</p>
+<h3>Feature Support</h3>
+<p>For a list of supported tags/filters/functions/tests see the <a href="https://github.com/twigjs/twig.js/wiki/Implementation-Notes">Implementation Notes</a> page on the wiki.</p>
+<h3>This template</h3>
+<p>Feel free to change this template at <i>[root]/source/prototype/index.twig</i></p>
+{% endblock %}
