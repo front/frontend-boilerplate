@@ -117,7 +117,7 @@ gulp.task('sprite', function() {
                     bust: false,
                     render: {
                         scss: {
-                            dest: "." + argv.src + "sass/_settings-sprite-autocompiled.scss",
+                            dest: "." + argv.src + "sass/_map-sprite-autocompiled.scss",
                             template: argv.src + "/sprite/sprite-template.scss"
                         }
                     }
