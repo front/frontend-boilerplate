@@ -247,7 +247,7 @@ gulp.task('clean:wordpress', function () {
 });
 
 // Base build task.
-gulp.task('build', ['sass', 'sprite-fallback', 'copy-assets', 'styleguide', 'prototype']);
+gulp.task('build', ['sass', 'js', 'sprite-fallback', 'copy-assets', 'styleguide', 'prototype']);
 
 // Default task.
 gulp.task('default', ['browser-sync', 'watch']);
