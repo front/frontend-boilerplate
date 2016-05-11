@@ -59,7 +59,7 @@ gulp.task('log', function() {
  * Prototype compiling task.
  */
 gulp.task('prototype', function() {
-  gulp.src([argv.src + 'prototype/**/*.twig', '!' + argv.src + 'prototype/_includes/*.twig'])
+  gulp.src([argv.src + 'prototype/**/*.twig', '!' + argv.src + 'prototype/includes/*.twig', '!' + argv.src +'prototype/layouts/*.twig'])
     .pipe(plumber())
     .pipe(twig())
     .pipe(gulp.dest(argv.dest + 'prototype'))
