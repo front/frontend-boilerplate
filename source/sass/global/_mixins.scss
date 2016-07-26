@@ -49,14 +49,15 @@
       }
       // Outputs dimensions of icon
       @if $type == all or $type == size {
-        // width: map-get($iconMap, width);
-        // height: map-get($iconMap, height);
-        width: em(map-get($iconMap, width));
-        height: em(map-get($iconMap, height));
+        width: map-get($iconMap, width);
+        height: map-get($iconMap, height);
+        // width: em(map-get($iconMap, width));
+        // height: em(map-get($iconMap, height));
       }
       // Outputs background position
       @if $type == all or $type == bg {
-        background-position: em((map-get($iconMap, x))) em((map-get($iconMap, y)));
+        background-position: (map-get($iconMap, x)) (map-get($iconMap, y));
+        // background-position: em((map-get($iconMap, x))) em((map-get($iconMap, y)));
       }
     }
   }
@@ -113,16 +114,17 @@
 
   // Outputs dimensions in em
   @if $type == all or $type == size {
-    // width: em(map-get($iconMap, width) + 1);
-    // height: em(map-get($iconMap, height) + 1);
-    width: em(map-get($iconMap, width));
-    height: em(map-get($iconMap, height));
+    width: map-get($iconMap, width);
+    height: map-get($iconMap, height);
+    // width: em(map-get($iconMap, width));
+    // height: em(map-get($iconMap, height));
 
   }
 
   // Outputs background position in em
   @if $type == all or $type == bg {
-    background-position: em(map-get($iconMap, x)) em(map-get($iconMap, y));
+    background-position: map-get($iconMap, x) map-get($iconMap, y);
+    // background-position: em(map-get($iconMap, x)) em(map-get($iconMap, y));
   }
 
   // Add ie fallback
