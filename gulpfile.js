@@ -14,6 +14,7 @@ var gulp        = require('gulp'),
     styledown   = require('gulp-styledown'),
     svgSprite   = require('gulp-svg-sprite'),
     svg2png     = require('gulp-svg2png'),
+    // ghPages     = require('gulp-gh-pages'), // Uncomment if deploy:styleproto is used
     filter      = require('gulp-filter');
 
 // Setup default arguments.
@@ -77,6 +78,7 @@ gulp.task('sass', function () {
     .pipe(cssPrefix(argv.cssPrefix, { cascade: true }))
     .pipe(gulpif(argv.env === 'development', sourcemaps.write('sourcemap')))
     .pipe(gulp.dest(argv.dest + 'css'))
+    .pipe(gulpif(argv.env === 'production', gulp.dest(argv.root + 'css')))
     .pipe(browserSync.reload({ stream: true }));
 });
 
@@ -91,7 +93,7 @@ gulp.task('js', function() {
     .pipe(gulp.dest(argv.dest + 'js'))
     .pipe(gulpif(argv.env === 'production', uglify()))
     .pipe(gulpif(argv.env === 'production', rename({ suffix: '.min' })))
-    .pipe(gulpif(argv.env === 'production', gulp.dest(argv.dest + 'js')))
+    .pipe(gulpif(argv.env === 'production', gulp.dest(argv.root + 'js')))
     .pipe(browserSync.reload({ stream: true, once: true }));
 });
 
@@ -102,36 +104,46 @@ gulp.task('js', function() {
 // SVG
 gulp.task('sprite', function() {
     gulp.src('**/*.svg', {cwd: argv.src + 'sprite'})
-        .pipe(svgSprite({
-            shape: {
-                dest: "sprite/single"
-            },
-            mode: {
-                css: {
-                    spacing: {
-                        padding: 5
-                    },
-                    dest: "./",
-                    layout: "diagonal",
-                    sprite: "sprite/sprite.svg",
-                    bust: false,
-                    render: {
-                        scss: {
-                            dest: "." + argv.src + "sass/_map-sprite-autocompiled.scss",
-                            template: argv.src + "/sprite/sprite-template.scss"
+        .pipe(gulpif(argv.env === 'production',
+            svgSprite({
+                shape: { dest: "sprite/single" },
+                mode: {
+                    css: {
+                        dest: "./",
+                        sprite: "sprite/sprite.svg",
+                        bust: false,
+                    }
+                }
+            }),
+            svgSprite({
+                shape: {
+                    dest: "sprite/single",
+                },
+                mode: {
+                    css: {
+                        dest: "./",
+                        sprite: "sprite/sprite.svg",
+                        bust: false,
+                        render: {
+                            scss: {
+                                dest: "." + argv.src + "sass/_map-sprite-autocompiled.scss",
+                                template: argv.src + "/sprite/sprite-template.scss"
+                            }
                         }
                     }
                 }
-            }
-        }))
-        .pipe(gulp.dest(argv.dest));
+            })
+        ))
+        .pipe(gulp.dest(argv.dest))
+        .pipe(gulpif(argv.env === 'production', gulp.dest(argv.root)));
 });
 
 // PNG fallback
-gulp.task('sprite-fallback', ['sprite'], function() {
+gulp.task('sprite:fallback', ['sprite'], function() {
     return gulp.src(argv.dest + 'sprite/sprite.svg')
         .pipe(svg2png())
-        .pipe(gulp.dest(argv.dest + 'sprite'));
+        .pipe(gulp.dest(argv.dest + 'sprite'))
+        .pipe(gulpif(argv.env === 'production', gulp.dest(argv.root + 'sprite')));
 });
 
 /**
@@ -141,9 +153,11 @@ gulp.task('copy-assets', function() {
   gulp.src([
       argv.src + 'index.html',
       argv.src + 'fonts/**/*',
-      argv.src + 'images/**/*'
+      argv.src + 'images/**/*',
+      // argv.src + 'CNAME' // Uncomment if deploy:styleproto is used
     ], { base: argv.src })
     .pipe(gulp.dest( argv.dest ))
+    .pipe(gulpif(argv.env === 'production', gulp.dest(argv.root)))
     .pipe(browserSync.reload({ stream: true }));
 });
 
@@ -179,7 +193,7 @@ gulp.task('watch', function () {
     gulp.watch(argv.src + 'prototype/**/*.twig', ['prototype']);
     gulp.watch(argv.src + 'sass/**/*', ['sass']);
     gulp.watch(argv.src + 'js/**/*', ['js']);
-    gulp.watch(argv.src + 'sprite/**/*', ['sprite-fallback']);
+    gulp.watch(argv.src + 'sprite/**/*', ['sprite:fallback']);
     gulp.watch(argv.src + 'images/**/*', ['copy-assets']);
     gulp.watch(argv.src + 'fonts/**/*', ['copy-assets']);
     gulp.watch(argv.src + 'styleguide/**/*.md', ['styleguide']);
@@ -246,8 +260,20 @@ gulp.task('clean:wordpress', function () {
   ]);
 });
 
+/**
+ * Deploy styleguide and prototype to gh-pages
+ * Uncomment task below if it's setup with
+ */
+// gulp.task('deploy:styleproto', function() {
+//   return gulp.src(argv.dest + '**/*')
+//     .pipe(ghPages({
+//         cacheDir: './.git-cache'
+//     }))
+//     .on('end', function(){ gutil.log("Sweet! The styleguide and prototype are deployed to gh-pages branch on GitHub"); });
+// });
+
 // Base build task.
-gulp.task('build', ['sass', 'js', 'sprite-fallback', 'copy-assets', 'styleguide', 'prototype']);
+gulp.task('build', ['sass', 'js', 'copy-assets', 'sprite:fallback', 'styleguide', 'prototype']);
 
 // Default task.
 gulp.task('default', ['browser-sync', 'watch']);

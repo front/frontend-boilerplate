@@ -3,3 +3,7 @@ tmp
 .DS_Store
 Thumbs.db
 *.map
+build
+.git-cache
+/index.html
+/CNAME
