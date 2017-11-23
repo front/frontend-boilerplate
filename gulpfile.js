@@ -19,7 +19,7 @@ var gulp        = require('gulp'),
 // Setup default arguments.
 var defaultOptions = {
   env: process.env.NODE_ENV || 'development',
-  name: process.cwd().match(/([^\/]*)\/*$/)[1],
+  name: process.env.npm_config_name || process.cwd().match(/([^\/]*)\/*$/)[1],
   // Paths.
   root: './',
   src:  './source/',
