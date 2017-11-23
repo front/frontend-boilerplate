@@ -11,6 +11,15 @@
   "bugs": {
     "url": "https://github.com/front/front-boilerplate/issues"
   },
+  "main": "gulpfile.js",  
+  "scripts": {
+    "dev": "gulp",
+    "build": "gulp build --env=production",
+    "add-theme:wordpress": "gulp add-theme:wordpress",
+    "clean:wordpress": "gulp clean:wordpress",
+    "deploy:styleproto": "gulp deploy:styleproto",
+    "sprite": "gulp sprite"
+  },
   "homepage": "https://github.com/front/front-boilerplate#readme",
   "devDependencies": {
     "babel-core": "^6.26.0",
