@@ -13,7 +13,6 @@ var gulp        = require('gulp'),
     jshint      = require('gulp-jshint'),
     styledown   = require('gulp-styledown'),
     svgSprite   = require('gulp-svg-sprite'),
-    svg2png     = require('gulp-svg2png'),
     // ghPages     = require('gulp-gh-pages'), // Uncomment if deploy:styleproto is used
     filter      = require('gulp-filter');
 
@@ -141,7 +140,6 @@ gulp.task('sprite', function() {
 // PNG fallback
 gulp.task('sprite:fallback', ['sprite'], function() {
     return gulp.src(argv.dest + 'sprite/sprite.svg')
-        .pipe(svg2png())
         .pipe(gulp.dest(argv.dest + 'sprite'))
         .pipe(gulpif(argv.env === 'production', gulp.dest(argv.root + 'sprite')));
 });
