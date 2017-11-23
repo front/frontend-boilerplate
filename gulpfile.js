@@ -13,6 +13,7 @@ var gulp        = require('gulp'),
     jshint      = require('gulp-jshint'),
     styledown   = require('gulp-styledown'),
     svgSprite   = require('gulp-svg-sprite'),
+    babel       = require('gulp-babel'),
     // ghPages     = require('gulp-gh-pages'), // Uncomment if deploy:styleproto is used
     filter      = require('gulp-filter');
 
@@ -87,6 +88,7 @@ gulp.task('sass', function () {
 gulp.task('js', function() {
   gulp.src(argv.src + 'js/*.js')
     .pipe(plumber())
+    .pipe(babel({presets: ['env']}))
     .pipe(jshint())
     .pipe(jshint.reporter('default'))
     .pipe(gulp.dest(argv.dest + 'js'))
